@@ -17,8 +17,8 @@ def home():
     '''
     Main page view, where lists all the files. Only available for logged users.
     '''
-    if not is_logged():
-        return redirect("/login")
+    # if not is_logged():
+    #     return redirect("/login")
     files = get_all_files()
     return render_template("home.html", files=files)
 
@@ -30,10 +30,10 @@ def download_file(filename):
     :param filename: name of the file
     :return: response with the file attached in the body
     '''
-    if not is_logged():
-        return redirect("/login")
-    if not read_permission():
-        return redirect("/home")
+    # if not is_logged():
+    #     return redirect("/login")
+    # if not read_permission():
+    #     return redirect("/home")
     full_filename = os.path.join(UPLOADS_DIR, secure_filename(filename))
     with open(full_filename, "rb") as file:
         body = file.read()

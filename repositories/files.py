@@ -15,9 +15,8 @@ def check_file_exists(filename):
     conn = mariadb.connect(**configMariaDB)
     cur = conn.cursor()
     cur.execute(
-        "SELECT * FROM files WHERE filename= %(filename)s", {
-            'filename': filename
-        })
+        "SELECT * FROM files WHERE filename = '%s'" % filename
+    )
     result = cur.fetchone()
     cur.close()
     conn.close()

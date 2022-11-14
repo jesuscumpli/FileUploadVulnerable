@@ -13,9 +13,8 @@ def check_user_exists(username):
     conn = mariadb.connect(**configMariaDB)
     cur = conn.cursor()
     cur.execute(
-        "SELECT * FROM users WHERE username= %(username)s", {
-            'username': username
-        })
+        "SELECT * FROM users WHERE username= '%s'" % username
+    )
     result = cur.fetchone()
     cur.close()
     conn.close()
@@ -28,11 +27,10 @@ def find_user_password(username, password):
     conn = mariadb.connect(**configMariaDB)
     cur = conn.cursor()
     cur.execute(
-        "SELECT username, role FROM users WHERE username= %(username)s AND password=%(password)s", {
-            'username': username,
-            'password': password
-        })
+        "SELECT username, role FROM users WHERE username= '%s' AND password='%s'" % (username, password)
+    )
     result = cur.fetchone()
+    print(result)
     cur.close()
     conn.close()
     return result

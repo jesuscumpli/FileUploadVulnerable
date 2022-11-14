@@ -1,6 +1,6 @@
 import datetime
 import os
-from flask import render_template, redirect, request, Response
+from flask import render_template, redirect, request, Response, session
 from werkzeug.utils import secure_filename
 from repositories.files import *
 from utils import *
@@ -21,11 +21,11 @@ def upload():
     Upload view and post functionality, where users with write permission can upload a file to the server.
     :return: upload view
     '''
-    if not is_logged():
-        return redirect("/login")
+    # if not is_logged():
+    #     return redirect("/login")
 
-    if not write_permission():
-        return redirect("/home")
+    # if not write_permission():
+    #     return redirect("/home")
 
     if request.method == "POST":
         files = request.files
@@ -34,6 +34,7 @@ def upload():
             return Response("Fichero no encontrado", status=400)
         filename = file.filename
         user = session["username"]
+        # user = request.args("username")
         date = datetime.datetime.utcnow()
         # Save File
         full_filename = os.path.join(UPLOADS_DIR, secure_filename(file.filename))
