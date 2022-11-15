@@ -30,7 +30,6 @@ def find_user_password(username, password):
         "SELECT username, role FROM users WHERE username= '%s' AND password='%s'" % (username, password)
     )
     result = cur.fetchone()
-    print(result)
     cur.close()
     conn.close()
     return result
@@ -43,10 +42,10 @@ def create_new_user(username, password, role):
     try:
         query = '''
             INSERT INTO users
-            VALUES (%s, %s, %s)
-        '''
-        args = (username, password, role)
-        cur.execute(query, args)
+            VALUES ('%s', '%s', '%s') 
+        ''' % (username, password, role)
+        # args = (username, password, role)
+        cur.execute(query)
         conn.commit()
     except mariadb.Error as error:
         inserted = False

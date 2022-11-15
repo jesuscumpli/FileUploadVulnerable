@@ -25,6 +25,7 @@
                                 <thead>
                                 <tr>
                                     <th>Filename</th>
+                                    <th class="text-center">Descripción</th>
                                     <th class="text-center">Información</th>
                                     <th class="text-center">Última Modificación</th>
                                     <th class="text-center">Creación</th>
@@ -48,6 +49,9 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
+                                            {{ file.description | safe }}
+                                        </td>
+                                        <td class="text-center">
                                             <span>Tamaño: {{ '%0.2f' | format(file.size/1024 | float) }} kB</span><br/>
                                             <span data-toggle="tooltip" data-placement="top"
                                                   title="{{ file.hash }}">Hash: {{ file.hash | truncate(20) }}</span>
@@ -61,19 +65,19 @@
                                             <span>{{ file.upload_date }}</span>
                                         </td>
                                         <td class="text-right">
-                                            {% if session["read"] %}
+{#                                            {% if session["read"] %}#}
                                                 <span><a href="/download/{{ file.filename }}" class="text-primary"
                                                          data-toggle="tooltip" title="Descargar"
                                                          data-original-title="view"><i class="fas fa-download"></i></a>
                                                 </span>
-                                            {% endif %}
-                                            {% if session["remove"] %}
+{#                                            {% endif %}#}
+{#                                            {% if session["remove"] %}#}
                                                 <span><a href="#" onclick="remove_file('{{ file.filename }}')"
                                                          class="text-danger ms-3" data-toggle="tooltip" title="Eliminar"
                                                          data-original-title="Message"><i
                                                         class="fas fa-trash"></i></a>
                                                 </span>
-                                            {% endif %}
+{#                                            {% endif %}#}
                                         </td>
                                     </tr>
                                 {% endfor %}

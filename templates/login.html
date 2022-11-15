@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename="css/login.css") }}"/>
 {% endblock %}
 
-{% block header %}
-{% endblock %}
+{#{% block header %}#}
+{#{% endblock %}#}
 
 {% block body %}
 
@@ -22,7 +22,7 @@
 
 							<h1 class="fs-4 card-title fw-bold mb-4">Inicio de Sesión</h1>
 
-							<form method="POST" action="/login">
+							<form method="POST" action="/login/auth">
                                 {% for message in get_flashed_messages() %}
                                     <div class="alert alert-danger">{{ message }}</div>
                                 {% endfor %}

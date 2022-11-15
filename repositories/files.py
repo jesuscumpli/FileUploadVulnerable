@@ -25,27 +25,27 @@ def check_file_exists(filename):
     else:
         return True
 
-def insert_file(filename, user, date_object, hash, size):
+def insert_file(filename, user, date_object, hash, size, description):
     conn = mariadb.connect(**configMariaDB)
     cur = conn.cursor()
     inserted = True
     try:
         date = date_object.strftime('%Y-%m-%d %H:%M:%S')
         query = '''
-            INSERT INTO files(filename, hash, upload_date, owner, last_modified_by, last_modified_date, size)
-            VALUES (%s,%s,%s,%s,%s,%s,%s)
-        '''
-        args = (filename, hash, date, user, user, date, size)
-        cur.execute(query, args)
+            INSERT INTO files(filename, hash, upload_date, owner, last_modified_by, last_modified_date, size, description)
+            VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')
+        ''' % (filename, hash, date, str(user), str(user), date, size, description)
+        # args = (filename, hash, date, user, user, date, size, description)
+        cur.execute(query)
         conn.commit()
-    except mariadb.Error as error:
+    except Exception as error:
         inserted = False
     finally:
         cur.close()
         conn.close()
         return inserted
 
-def update_file(filename, user, date_object, hash, size):
+def update_file(filename, user, date_object, hash, size, description):
     conn = mariadb.connect(**configMariaDB)
     cur = conn.cursor()
     updated = True
@@ -53,10 +53,10 @@ def update_file(filename, user, date_object, hash, size):
         last_modified_date = date_object.strftime('%Y-%m-%d %H:%M:%S')
         query = '''
             UPDATE files
-            SET last_modified_by=%s, last_modified_date=%s, hash=%s, size=%s
+            SET last_modified_by=%s, last_modified_date=%s, hash=%s, size=%s, description=%s
             WHERE filename=%s
         '''
-        args = (user, last_modified_date, hash, size, filename)
+        args = (str(user), last_modified_date, hash, size, filename, description)
         cur.execute(query, args)
         conn.commit()
     except mariadb.Error as error:

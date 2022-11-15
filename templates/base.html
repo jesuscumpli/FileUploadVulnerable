@@ -36,16 +36,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/home">Lista de Ficheros</a>
                     </li>
-                    {% if session["write"] %}
+{#                    {% if session["write"] %}#}
                     <li class="nav-item">
                         <a class="nav-link" href="/upload">Subir Fichero</a>
                     </li>
-                    {% endif %}
+{#                    {% endif %}#}
                 </ul>
                 <ul class="navbar-nav ms-auto b-2 mb-lg-0">
                     <li class="nav-item mx-3">
                         <span class="navbar-text">
-                            Username: {{ session["username"] }}
+                            Username: {{ session["username"] | safe }}
                         </span>
                     </li>
                     <li class="nav-item mx-3">
